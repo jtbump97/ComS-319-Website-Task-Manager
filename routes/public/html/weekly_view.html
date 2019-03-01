@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="row" style="margin: 10px;">
+    <input id="last_week_btn" type="button" class="btn btn-back col-2" value="Last Week" onclick="DASHBOARD.changeWeekView(false);">
+    <div class="col-2"></div>
+    <div class="form-group col-3">
+        <div class="input-group date" id="weekly_date_input" data-target-input="nearest">
+            <input id="input_weekly_date" type="text" class="form-control datetimepicker-input" title="weeklyDate" data-target="#weekly_date_input"/>
+            <div class="input-group-append" data-target="#weekly_date_input" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+        </div>
+    </div>
+    <input id="go_to_week_btn" type="button" class="btn btn-back col-1" value="GO" onclick="DASHBOARD.changeWeekView();">
+    <div class="col-2"></div>
+    <input id="next_week_btn" type="button" class="btn btn-back col-2" value="Next Week" onclick="DASHBOARD.changeWeekView(true);">
+</div>
+
+    <table id="weekly_table" border="3" class="weekly-table">
+        <tr class="header">
+            <th style="width:10%">Time</th>
+            <th class="weekly-th">Sunday</th>
+            <th class="weekly-th">Monday</th>
+            <th class="weekly-th">Tuesday</th>
+            <th class="weekly-th">Wednesday</th>
+            <th class="weekly-th">Thursday</th>
+            <th class="weekly-th">Friday</th>
+            <th class="weekly-th">Saturday</th>
+        </tr>
+        <tr>
+            <td class="weekly-td" id="time_data">
+                <div class="time-label">12:00-1:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">1:00-2:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">2:00-3:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">3:00-4:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">4:00-5:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">5:00-6:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">6:00-7:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">7:00-8:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">8:00-9:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">9:00-10:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">10:00-11:00 AM</div>
+                <hr class="weekly-hr"><div class="time-label">11:00-12:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">12:00-1:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">1:00-2:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">2:00-3:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">3:00-4:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">4:00-5:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">5:00-6:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">6:00-7:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">7:00-8:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">8:00-9:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">9:00-10:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">10:00-11:00 PM</div>
+                <hr class="weekly-hr"><div class="time-label">11:00-11:59 PM</div>
+            </td>
+            <td id="day_0" class="weekly-td"></td>
+            <td id="day_1" class="weekly-td"></td>
+            <td id="day_2" class="weekly-td"></td>
+            <td id="day_3" class="weekly-td"></td>
+            <td id="day_4" class="weekly-td"></td>
+            <td id="day_5" class="weekly-td"></td>
+            <td id="day_6" class="weekly-td"></td>
+        </tr>
+    </table>
+</body>
+</html>

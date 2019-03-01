@@ -1,0 +1,140 @@
+<html>
+
+<head>
+    <title>Create Profile</title>
+    <link rel="stylesheet" href="/libraries/stylesheets/style.css">
+    <link rel="stylesheet" href="/libraries/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="/libraries/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="/libraries/js/jquery.js"></script>
+    <script type="text/javascript" src="/libraries/js/asynch.js"></script>
+    <script type="text/javascript" src="/create/AddPerson.js"></script>
+</head>
+
+<style>
+    body {
+        background: #ff1400
+    }
+    section {
+        background: white;
+        color: white;
+        border-radius: 1em;
+        padding: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
+    }
+
+    label {
+        color: #bfae00;
+    }
+
+    h1 {
+        color: #005cbf;
+
+    }
+
+    .btn-color {
+        background: #005cbf;
+        color: white;
+    }
+
+    .signup-header {
+        color: #005cbf;
+    }
+</style>
+
+<body style="background-color: #00B7FF;">
+<div class="row">
+    <div class="col-md-8">
+        <h1>Fill all Fields</h1>
+    </div>
+</div>
+<section id="section_sighnup" style="display:block;">
+    <div class="signup-panel" style="display: block;">
+        <form id="signup_form" method="post">
+            <div class="card-title">
+                <h1 class="signup-header" align="center">Signup</h1>
+            </div>
+            <div id="signup_error_message" class="alert alert-danger" style="display:none; color: red;">
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <div id="div_signup_firstname" class="input-group">
+                        <label id="label_signup_firstname" for="input_signup_firstname" class="col-form-label-lg">First Name: </label>
+                        <input id="input_signup_firstname" type="text" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveField('', 'input_signup_lastname', event.keyCode);">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="div_signup_lastname" class="input-group">
+                        <label id="label_signup_lastname" for="input_signup_lastname" class="col-form-label-lg">Last Name: </label>
+                        <input id="input_signup_lastname" type="text" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveField('input_signup_firstname', 'input_signup_age', event.keyCode);">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="div_signup_age" class="input-group">
+                        <label id="label_signup_age" for="input_signup_age" class="col-form-label-lg">Age: </label>
+                        <input id="input_signup_age" type="text" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveField('input_signup_lastname', 'input_signup_username', event.keyCode);">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="div_signup_username" class="input-group">
+                        <label id="label_signup_username" for="input_signup_username" class="col-form-label-lg">Username: </label>
+                        <input id="input_signup_username" type="text" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveField('input_signup_age','input_signup_password', event.keyCode);">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="div_signup_password" class="input-group">
+                        <label id="label_signup_password" for="input_signup_password" class="col-form-label-lg">Password: </label>
+                        <input id="input_signup_password" type="password" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveField('input_signup_username', 'input_signup_reenterpassword', event.keyCode);">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="div_signup_reenterpassword" class="input-group">
+                        <label id="label_signup_reenterpassword" for="input_signup_reenterpassword" class="col-form-label-lg">Retype Password: </label>
+                        <input id="input_signup_reenterpassword" type="password" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveSubmit('input_signup_password', event.keyCode);">
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <input id="btn_submit_login" type="button" class="btn btn-color pull-right" style="float: right;" value="Create Account" onclick="ADDPERSON.submit()"/>
+            </div>
+        </form>
+    </div>
+</section>
+<section id="section_form_processing" style="display: none;">
+    <span style="background-color: white;"><i class="fa fa-spinner fa-3x fa-spin" style="color: #005cbf;"></i></span>
+</section>
+
+</body>
+
+</html>
+
+<script>
+    function MoveField(previous_field,next_field,keyCode) {
+        if (keyCode == 13 || keyCode == 40) {
+            var next = document.getElementById(next_field);
+            next.focus();
+            return false;
+        }
+        if(keyCode == 38){
+            var previous = document.getElementById(previous_field);
+            previous.focus();
+            return false;
+        }
+    }
+    function MoveSubmit(previous_field, keyCode){
+        if (keyCode == 13) {
+            ADDPERSON.submit();
+            return false;
+        }
+        if(keyCode == 38){
+            var previous = document.getElementById(previous_field);
+            previous.focus();
+            return false;
+        }
+    }
+</script>

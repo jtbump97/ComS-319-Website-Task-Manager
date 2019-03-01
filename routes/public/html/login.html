@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/libraries/stylesheets/style.css">
+  <link rel="stylesheet" href="/libraries/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="/libraries/js/bootstrap.bundle.js"></script>
+  <script type="text/javascript" src="/libraries/js/jquery.js"></script>
+  <script type="text/javascript" src="/libraries/js/asynch.js"></script>
+  <script type="text/javascript" src="/login/login.js"></script>
+
+</head>
+
+<style>
+  body {
+    background: #00B7FF
+  }
+  section {
+    background: white;
+    color: white;
+    border-radius: 1em;
+    padding: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+  }
+
+  label {
+    color: #005cbf;
+  }
+
+  h1 {
+    color: #005cbf;
+
+  }
+
+  .btn-color {
+    background: #005cbf;
+    color: white;
+  }
+
+  .login-header {
+    color: #005cbf;
+  }
+</style>
+
+<body style="background-color: #00B7FF;">
+<div class="row">
+  <div class="col-md-8">
+    <h1>Welcome To Cy-Task Manager</h1>
+  </div>
+  <div class="col-md-4">
+    <input type="button" value="Create Account" class="btn btn-color pull-right" style="float: right;" onclick="LOGIN.createAccount();"/>
+  </div>
+</div>
+<section id="section_login" style="display:block;">
+  <div class="login-panel" style="display: block;">
+    <form id="login_form" method="post">
+      <div class="card-title">
+        <h1 class="login-header" align="center">Login</h1>
+      </div>
+      <div id="login_error_message" class="alert alert-danger" style="display:none; color: red;">
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <div id="div_login_username" class="input-group">
+            <label id="label_login_username" for="input_login_username" class="col-form-label-lg">Username: </label>
+            <input id="input_login_username" type="text" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveField('', 'input_login_password',event.keyCode);">
+          </div>
+        </div>
+        <div class="form-group">
+          <div id="div_login_password" class="input-group">
+            <label id="label_login_password" for="input_login_password" class="col-form-label-lg">Password: </label>
+            <input id="input_login_password" type="password" class="input-group" style="float: right; background-color: gainsboro;" onkeydown="return MoveSubmit('input_login_username',event.keyCode);">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input id="btn_submit_login" type="button" class="btn btn-color pull-right" style="float: right;" value="Submit" onclick="LOGIN.submit()"/>
+      </div>
+    </form>
+  </div>
+</section>
+<section id="section_form_processing" style="display: none;">
+  <span style="background-color: white;"><i class="fa fa-spinner fa-3x fa-spin" style="color: #005cbf;"></i></span>
+</section>
+</body>
+
+</html>
+<script>
+    function MoveField(previous_field,next_field,keyCode) {
+        if (keyCode == 13 || keyCode == 40) {
+            var next = document.getElementById(next_field);
+            next.focus();
+            return false;
+        }
+        if(keyCode == 38){
+            var previous = document.getElementById(previous_field);
+            previous.focus();
+            return false;
+        }
+    }
+    function MoveSubmit(previous_field, keyCode){
+        if (keyCode == 13) {
+            LOGIN.submit();
+            return false;
+        }
+        if(keyCode == 38){
+            var previous = document.getElementById(previous_field);
+            previous.focus();
+            return false;
+        }
+    }
+</script>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/libraries/stylesheets/style.css">
+    <link rel="stylesheet" href="/libraries/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/libraries/js/bootstrap.bundle.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+    <script type="text/javascript" src="/libraries/js/asynch.js"></script>
+    <script type="text/javascript" src="/dashboard/dashboard.js"></script>
+
+    <style type="text/css">
+        h3 {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -16%)
+        }
+        .nav-link {
+        	background: #007bff;
+            color: white;
+        }
+        .navbar-brand {
+        	background: #007bff;
+            color: white;
+        }
+        .btn-secondary {
+            background: #00B7FF;
+            color: white;
+        }
+        .btn-back {
+            background: #007bff;
+            color: white;
+        }
+        .weekly-table {
+            background-color: white;
+            border-color: #007bff;
+            width: 100%;
+        }
+        .weekly-th {
+            width: 13.1428571%;
+        }
+        .weekly-hr {
+            display: block;
+            margin-block-start: 17px;
+            margin-block-end: 17px;
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+            overflow: hidden;
+            border-style: inset;
+            border-width: 1px;
+            border-color: #00b7ff;
+        }
+        .weekly-td {
+            height: 1440px;
+        }
+        .time-label {
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background: #00b7ff;">
+<div class="container-fluid">
+    <nav class="navbar navbar-expand bg-primary">
+        <a class="navbar-brand" href="#">Cy-Task Manager</a>
+        <ul class="navbar-nav">
+            <li class="active nav-item">
+                <a class="nav-link" href="javascript:void(0);">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0);" data-id="0" data-toggle="modal" data-target="#modal_add_edit_task" onclick="$('#submit_button').val(0);">Add Task</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0);" onclick="DASHBOARD.listView();">All Tasks</a>
+            </li>
+        </ul>
+        <form class="form-inline ml-auto">
+            <input id="input_search" class="form-control mr-sm-2" type="text" placeholder="Search">
+            <input class="btn btn-secondary" type="button" value="Search Task" onclick="DASHBOARD.search();">
+        </form>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="DASHBOARD.logout();">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="module_view"></div>
+
+</div>
+
+<!-- Add Edit Modal -->
+<div class="modal fade" id="modal_add_edit_task">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="add_modal_header" class="modal-title">Add Task</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="form_error_message" class="alert alert-danger" style="display:none; color: red;"></div>
+                <form id="add_edit_form" class="validate">
+                    <div id="div_task_title" class="form-group">
+                        <input hidden="hidden" id="previous_view" value="">
+                        <label id="lbl_task_title" for="input_task_title" class="col-form-label">Task Title</label>
+                        <input id="input_task_title" title="taskTitle" type="text" class="form-control" placeholder="Homework">
+                    </div>
+                    <div id="div_task_desc" class="form-group">
+                        <label id="lbl_task_desc" for="input_task_desc" class="col-form-label">Task Description</label>
+                        <textarea id="input_task_desc" title="taskDesc" type="text" rows="3" class="form-control" placeholder="Description of the task that needs to be completed."></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label id="lbl_start_date_time" for="start_date_time">Start Date Time</label>
+                                <div class="input-group datetime" id="start_date_time" data-target-input="nearest">
+                                    <input id="input_start_date_time" type="text" class="form-control datetimepicker-input" title="startDateTime" data-target="#start_date_time"/>
+                                    <div class="input-group-append" data-target="#start_date_time" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label id="lbl_end_date_time" for="end_date_time">End Date Time</label>
+                                <div class="input-group datetime" id="end_date_time" data-target-input="nearest">
+                                    <input id="input_end_date_time" type="text" class="form-control datetimepicker-input" title="endDateTime" data-target="#end_date_time"/>
+                                    <div class="input-group-append" data-target="#end_date_time" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="div_task_priority" class="form-group">
+                        <label id="lbl_task_priority" for="input_task_desc" class="col-form-label">Task Priority</label>
+                        <select id="input_task_priority" title="taskPriority" class="form-control">
+                            <option value="1">Low</option>
+                            <option value="2">Average</option>
+                            <option value="3">High</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button id="submit_button" value="0" type="button" class="btn btn-secondary" onclick="ADD_EDIT_TASK.submitButton();">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="modal_view_task">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="view_modal_header" class="modal-title">View Task</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div id="view_error_message" class="alert alert-danger" style="display:none; color: red;"></div>
+                <div class="col-12">
+                    <div id="view_task_id" data-id="0"></div>
+                    <div class="row">
+                        <dl>
+                            <dt>Task Title</dt>
+                            <dd id="view_task_title" class="word-wrap"></dd>
+                        </dl>
+                    </div>
+                    <div class="row">
+                        <dl>
+                            <dt>Task Description</dt>
+                            <dd id="view_task_desc" class="word-wrap"></dd>
+                        </dl>
+                    </div>
+                    <div class="row">
+                        <dl>
+                            <dt>Task Start Date</dt>
+                            <dd id="view_start_date" class="word-wrap"></dd>
+                        </dl>
+                    </div>
+                    <div class="row">
+                        <dl>
+                            <dt>Task End Date</dt>
+                            <dd id="view_end_date" class="word-wrap"></dd>
+                        </dl>
+                    </div>
+                    <div class="row">
+                        <dl>
+                            <dt>Task Priority</dt>
+                            <dd id="view_priority" class="word-wrap"></dd>
+                        </dl>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <dl>
+                                <dt>Documents</dt>
+                                <dd id="view_documents"></dd>
+                            </dl>
+                        </div>
+                        <div class="col-6">
+                            <span class="switch" onclick="DASHBOARD.markCompleted();">
+                                <input type="checkbox" class="switch" id="is_completed">
+                                <label for="is_completed">Completed</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button id="delete_task" type="button" class="btn btn-danger" data-dismiss="modal" value="0" onclick="ADD_EDIT_TASK.deleteTask();">Delete</button>
+                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                <button id="open_edit_modal" type="button" class="btn btn-secondary" value="0" onclick="ADD_EDIT_TASK.showEditModal();">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_upload_document">
+    <div class="modal-dialog">
+        <form id="documentForm" method="post" enctype="multipart/form-data" action="/uploadDocument">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="doc_upload_header" class="modal-title">Upload Document</h4>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <div id="upload_error_message" class="alert alert-danger" style="display:none; color: red;"></div>
+                    <div class="row">
+                        <div id="document_names" class="col-12">
+                            <!-- Display documents here -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input id="document_upload_task_id" hidden="hidden" type="text" value="0" name="taskId">
+                            <input id="document_upload" type="file" name="file">
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                    <input id="upload_document_submit" type="button" class="btn btn-secondary" value="Upload" onclick="ADD_EDIT_TASK.submitTaskFile();"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
